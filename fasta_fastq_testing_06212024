@@ -1,0 +1,21 @@
+# steps followed to test the fasta and fastq files.
+# git clone repo using url
+# cd into dir
+git checkout -b scicomptest_chavan
+# add the fasta and fastq files from the given location to assests 
+module load nextflow24.04.2
+# changed the conf/params.config
+nano conf/params.config
+# changed the gtdbtk_min_af to character
+gtdbtk_min_af = '0.65'
+git add conf/params.config
+git commit -m "changed the params to string"
+git status
+# check your are on the branch
+# run the nextflow might have to provide absolute paths to input file
+nextflow run ./wf-paired-end-illumina-assembly \
+  -profile rosalind,singularity \
+  -c /scicomp/reference/nextflow/configs/cdc-dev.config \
+  --input ./wf-paired-end-illumina-assembly/assests/scicomp_test/ \
+  --outdir wfpei-scicomptest_2024621
+# pipeline failed to pull singularity images.
